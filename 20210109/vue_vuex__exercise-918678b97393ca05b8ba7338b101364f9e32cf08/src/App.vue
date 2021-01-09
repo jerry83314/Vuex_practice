@@ -16,8 +16,8 @@
           data-offset="400">
           <h6>已選擇商品</h6>
           <table class="table table-sm">
-            <tbody>
-              <tr v-for="item in cart.carts" :key="item.id" v-if="cart.carts.length">
+            <tbody v-if="cart.carts.length">
+              <tr v-for="item in cart.carts" :key="item.id">
                 <td class="align-middle text-center">
                   <a href="#" class="text-muted" @click.prevent="removeCart(item.id)">
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -69,23 +69,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'App',
   data() {
     return {};
   },
   computed: {
-    cart() {
-      return this.$store.state.cart;
-    },
+    ...mapGetters(['cart']),
   },
   methods: {
-    getCart() {
-      this.$store.dispatch('getCart');
-    },
     removeCart(id) {
       this.$store.dispatch('removeCart', id);
     },
+    ...mapActions(['getCart']),
   },
   created() {
     this.getCart();

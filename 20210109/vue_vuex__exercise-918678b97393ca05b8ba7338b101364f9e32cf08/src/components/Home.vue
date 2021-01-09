@@ -70,6 +70,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Home',
   data() {
@@ -88,20 +90,13 @@ export default {
       }
       return this.products;
     },
-    products() {
-      return this.$store.state.products;
-    },
-    categories() {
-      return this.$store.state.categories;
-    },
+    ...mapGetters(['products', 'categories']),
   },
   methods: {
-    getProducts() {
-      this.$store.dispatch('getProducts');
-    },
     addtoCart(id, qty = 1) {
       this.$store.dispatch('addtoCart', { id, qty });
     },
+    ...mapActions(['getProducts']),
   },
   created() {
     this.getProducts();

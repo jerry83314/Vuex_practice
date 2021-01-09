@@ -82,4 +82,15 @@ export default new Vuex.Store({
       state.cart = payload;
     },
   },
+  getters: {
+    products(state) {
+      return state.products;
+    },
+    categories(state) {
+      return state.categories;
+    },
+    cart(state) {
+      return state.cart;
+    },
+  },
 });
