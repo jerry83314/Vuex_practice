@@ -95,7 +95,7 @@ export default {
   methods: {
     addtoCart(id, qty = 1) {
       const vm = this;
-      vm.$store.dispatch('addtoCart', { id, qty });
+      vm.$store.dispatch('cartModules/addtoCart', { id, qty });
     },
     ...mapActions('productsModules', ['getProducts']),
   },

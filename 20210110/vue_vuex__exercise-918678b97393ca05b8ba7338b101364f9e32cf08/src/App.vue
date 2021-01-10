@@ -77,14 +77,14 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['cart']),
+    ...mapGetters('cartModules', ['cart']),
   },
   methods: {
     removeCart(id) {
       const vm = this;
-      vm.$store.dispatch('removeCart', id);
+      vm.$store.dispatch('cartModules/removeCart', id);
     },
-    ...mapActions(['getCart']),
+    ...mapActions('cartModules', ['getCart']),
   },
   created() {
     this.getCart();
