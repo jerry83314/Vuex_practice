@@ -37,6 +37,15 @@ export default new Vuex.Store({
         console.log('加入購物車:', response);
       });
     },
+    removeCart(context, id) {
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      context.commit('LOADING', true);
+      axios.delete(url).then((response) => {
+        context.commit('LOADING', false);
+        // vm.getCart();
+        console.log('刪除購物車項目', response);
+      });
+    },
   },
   mutations: {
     LOADING(state, status) {
