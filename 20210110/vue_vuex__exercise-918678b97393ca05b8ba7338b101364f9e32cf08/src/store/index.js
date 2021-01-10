@@ -24,6 +24,19 @@ export default new Vuex.Store({
         context.commit('LOADING', false);
       });
     },
+    addtoCart(context, { id, qty }) {
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      context.commit('LOADING', true);
+      const item = {
+        product_id: id,
+        qty,
+      };
+      context.commit('LOADING', true);
+      axios.post(url, { data: item }).then((response) => {
+        context.commit('LOADING', false);
+        console.log('加入購物車:', response);
+      });
+    },
   },
   mutations: {
     LOADING(state, status) {
