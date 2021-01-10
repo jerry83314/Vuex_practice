@@ -90,13 +90,13 @@ export default {
       }
       return this.products;
     },
-    ...mapGetters(['products', 'categories']),
+    ...mapGetters('productsModules', ['products', 'categories']),
   },
   methods: {
     addtoCart(id, qty = 1) {
       this.$store.dispatch('addtoCart', { id, qty });
     },
-    ...mapActions(['getProducts']),
+    ...mapActions('productsModules', ['getProducts']),
   },
   created() {
     this.getProducts();
