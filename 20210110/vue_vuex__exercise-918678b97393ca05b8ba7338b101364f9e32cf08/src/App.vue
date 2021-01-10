@@ -69,26 +69,22 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'App',
   data() {
     return {};
   },
   computed: {
-    cart() {
-      const vm = this;
-      return vm.$store.state.cart;
-    },
+    ...mapGetters(['cart']),
   },
   methods: {
-    getCart() {
-      const vm = this;
-      vm.$store.dispatch('getCart');
-    },
     removeCart(id) {
       const vm = this;
       vm.$store.dispatch('removeCart', id);
     },
+    ...mapActions(['getCart']),
   },
   created() {
     this.getCart();
