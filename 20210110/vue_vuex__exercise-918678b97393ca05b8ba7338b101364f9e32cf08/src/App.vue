@@ -72,24 +72,18 @@
 export default {
   name: 'App',
   data() {
-    return {
-      cart: {
-        carts: [],
-      },
-    };
+    return {};
+  },
+  computed: {
+    cart() {
+      const vm = this;
+      return vm.$store.state.cart;
+    },
   },
   methods: {
     getCart() {
       const vm = this;
-      vm.$store.dispatch('updateLoading', true);
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      this.$http.get(url).then((response) => {
-        if (response.data.data.carts) {
-          vm.cart = response.data.data;
-        }
-        vm.$store.dispatch('updateLoading', false);
-        console.log('取得購物車', response.data.data);
-      });
+      vm.$store.dispatch('getCart');
     },
     removeCart(id) {
       const vm = this;
