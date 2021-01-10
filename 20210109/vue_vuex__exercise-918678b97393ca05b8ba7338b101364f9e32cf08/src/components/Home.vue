@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     addtoCart(id, qty = 1) {
-      this.$store.dispatch('addtoCart', { id, qty });
+      this.$store.dispatch('cartsModules/addtoCart', { id, qty });
     },
     ...mapActions('productsModules', ['getProducts']),
   },

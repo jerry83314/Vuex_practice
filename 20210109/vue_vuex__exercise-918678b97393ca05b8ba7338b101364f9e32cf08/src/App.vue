@@ -77,13 +77,13 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(['cart']),
+    ...mapGetters('cartsModules', ['cart']),
   },
   methods: {
     removeCart(id) {
-      this.$store.dispatch('removeCart', id);
+      this.$store.dispatch('cartsModules/removeCart', id);
     },
-    ...mapActions(['getCart']),
+    ...mapActions('cartsModules', ['getCart']),
   },
   created() {
     this.getCart();
