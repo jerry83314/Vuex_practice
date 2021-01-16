@@ -21,8 +21,21 @@ export default new Vuex.Store({
         context.commit('PRODUCTS', response.data.products);
         console.log('取得產品列表:', response);
         context.commit('CATEGORIES', response.data.products);
-        // vm.getUnique();
         context.dispatch('updateLoading', false);
+      });
+    },
+    addtoCart(context, { id, qty }) {
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      context.dispatch('updateLoading', true);
+      const item = {
+        product_id: id,
+        qty,
+      };
+      context.dispatch('updateLoading', true);
+      axios.post(url, { data: item }).then((response) => {
+        context.dispatch('updateLoading', false);
+        console.log('加入購物車:', response);
+        context.dispatch('getProducts');
       });
     },
   },
