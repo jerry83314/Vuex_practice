@@ -2,13 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 
+import productsModules from './product';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     isLoading: true,
-    products: [],
-    categories: [],
     cart: {
       carts: [],
     },
@@ -16,16 +16,6 @@ export default new Vuex.Store({
   actions: {
     updateLoading(context, status) {
       context.commit('LOADING', status);
-    },
-    getProducts(context) {
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
-      context.dispatch('updateLoading', true);
-      axios.get(url).then((response) => {
-        context.commit('PRODUCTS', response.data.products);
-        console.log('取得產品列表:', response);
-        context.commit('CATEGORIES', response.data.products);
-        context.dispatch('updateLoading', false);
-      });
     },
     addtoCart(context, { id, qty }) {
       const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
@@ -66,29 +56,16 @@ export default new Vuex.Store({
     LOADING(state, status) {
       state.isLoading = status;
     },
-    PRODUCTS(state, payload) {
-      state.products = payload;
-    },
-    CATEGORIES(state, payload) {
-      const categories = new Set();
-      payload.forEach((item) => {
-        categories.add(item.category);
-      });
-      state.categories = Array.from(categories);
-    },
     CART(state, payload) {
       state.cart = payload;
     },
   },
   getters: {
-    products(state) {
-      return state.products;
-    },
-    categories(state) {
-      return state.categories;
-    },
     cart(state) {
       return state.cart;
     },
+  },
+  modules: {
+    productsModules,
   },
 });
