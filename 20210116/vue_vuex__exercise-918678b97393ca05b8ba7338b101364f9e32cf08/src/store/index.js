@@ -9,6 +9,9 @@ export default new Vuex.Store({
     isLoading: true,
     products: [],
     categories: [],
+    cart: {
+      carts: [],
+    },
   },
   actions: {
     updateLoading(context, status) {
@@ -35,7 +38,7 @@ export default new Vuex.Store({
       axios.post(url, { data: item }).then((response) => {
         context.dispatch('updateLoading', false);
         console.log('加入購物車:', response);
-        context.dispatch('getProducts');
+        context.dispatch('getCart');
       });
     },
     removeCart(context, id) {
@@ -43,8 +46,19 @@ export default new Vuex.Store({
       context.dispatch('updateLoading', true);
       axios.delete(url).then((response) => {
         context.dispatch('updateLoading', false);
-        // vm.getCart();
+        context.dispatch('getCart');
         console.log('刪除購物車項目', response);
+      });
+    },
+    getCart(context) {
+      context.dispatch('updateLoading', true);
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
+      axios.get(url).then((response) => {
+        if (response.data.data.carts) {
+          context.commit('CART', response.data.data);
+        }
+        context.dispatch('updateLoading', false);
+        console.log('取得購物車', response.data.data);
       });
     },
   },
@@ -61,6 +75,9 @@ export default new Vuex.Store({
         categories.add(item.category);
       });
       state.categories = Array.from(categories);
+    },
+    CART(state, payload) {
+      state.cart = payload;
     },
   },
 });
