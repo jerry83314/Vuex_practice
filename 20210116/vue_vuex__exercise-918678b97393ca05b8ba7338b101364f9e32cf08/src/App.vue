@@ -94,13 +94,7 @@ export default {
     },
     removeCart(id) {
       const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.$store.dispatch('updateLoading', true);
-      this.$http.delete(url).then((response) => {
-        vm.$store.dispatch('updateLoading', false);
-        vm.getCart();
-        console.log('刪除購物車項目', response);
-      });
+      vm.$store.dispatch('removeCart', id);
     },
   },
   created() {

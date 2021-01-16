@@ -38,6 +38,15 @@ export default new Vuex.Store({
         context.dispatch('getProducts');
       });
     },
+    removeCart(context, id) {
+      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
+      context.dispatch('updateLoading', true);
+      axios.delete(url).then((response) => {
+        context.dispatch('updateLoading', false);
+        // vm.getCart();
+        console.log('刪除購物車項目', response);
+      });
+    },
   },
   mutations: {
     LOADING(state, status) {
