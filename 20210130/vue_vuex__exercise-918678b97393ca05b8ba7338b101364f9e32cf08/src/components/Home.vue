@@ -94,18 +94,7 @@ export default {
   },
   methods: {
     addtoCart(id, qty = 1) {
-      const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      vm.isLoading = true;
-      const item = {
-        product_id: id,
-        qty,
-      };
-      vm.isLoading = true;
-      this.$http.post(url, { data: item }).then((response) => {
-        vm.isLoading = false;
-        console.log('加入購物車:', response);
-      });
+      this.$store.dispatch('addtoCart', { id, qty });
     },
     ...mapActions(['getProducts']),
   },

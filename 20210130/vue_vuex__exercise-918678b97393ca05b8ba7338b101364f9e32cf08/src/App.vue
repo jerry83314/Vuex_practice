@@ -69,39 +69,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'App',
   data() {
-    return {
-      cart: {
-        carts: [],
-      },
-      isLoading: false,
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters(['cart']),
   },
   methods: {
-    getCart() {
-      const vm = this;
-      vm.isLoading = true;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart`;
-      this.$http.get(url).then((response) => {
-        if (response.data.data.carts) {
-          vm.cart = response.data.data;
-        }
-        vm.isLoading = false;
-        console.log('取得購物車', response.data.data);
-      });
-    },
     removeCart(id) {
-      const vm = this;
-      const url = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/cart/${id}`;
-      vm.isLoading = true;
-      this.$http.delete(url).then((response) => {
-        vm.isLoading = false;
-        vm.getCart();
-        console.log('刪除購物車項目', response);
-      });
+      this.$store.dispatch('removeCart', id);
     },
+    ...mapActions(['getCart']),
   },
   created() {
     this.getCart();
