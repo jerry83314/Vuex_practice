@@ -66,6 +66,10 @@
         </div>
       </div>
     </div>
+
+    <div>{{ myForm }}</div>
+    <button class="btn btn-info" @click.prevent="getMyFromFn">返回</button>
+    <!-- <div class="text-danger">test</div> -->
   </div>
 </template>
 
@@ -77,7 +81,12 @@ export default {
   data() {
     return {
       searchText: '',
+      myForm: {},
     };
+  },
+  created() {
+    this.getProducts();
+    this.myForm = this.$store.state.myForm;
   },
   computed: {
     filterData() {
@@ -93,13 +102,16 @@ export default {
     ...mapGetters(['products', 'categories']),
   },
   methods: {
+    getMyFromFn() {
+      console.log('test3');
+      this.$store.dispatch('getOriginalForm', this.myForm);
+      console.log('test4');
+      this.$router.push('/test');
+    },
     addtoCart(id, qty = 1) {
       this.$store.dispatch('addtoCart', { id, qty });
     },
     ...mapActions(['getProducts']),
-  },
-  created() {
-    this.getProducts();
   },
 };
 </script>
